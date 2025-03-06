@@ -708,3 +708,21 @@ public void handleQRExpiry(String qrCode) {
 ---
 
 此用例图及说明文档已完整覆盖信用担保型物品借用系统的核心业务流程，建议配合原型设计工具（Axure/Figma）制作交互演示原型，并在开发阶段采用测试驱动开发（TDD）模式确保信用计算逻辑的准确性。
+
+## 二、系统架构设计阶段
+
+## 三、详细设计阶段
+
+### 数据库设计
+
+**E-R图**
+
+![E-R图.drawio](https://huaperion-blog-pic.oss-cn-beijing.aliyuncs.com/Blog/E-R%E5%9B%BE.drawio.png)
+
+**数据库创建**
+
+```SQL
+CREATE DATABASE `campus_item_sharing_platform` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
+```
+
+使用 `utf8mb4` 字符集和 `utf8mb4_unicode_ci` 排序规则创建数据库。
