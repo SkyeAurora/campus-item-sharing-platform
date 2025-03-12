@@ -1,8 +1,10 @@
 spring:
+  main:
+    web-application-type: reactive
   application:
-    name: user-service #微服务名称
+    name: gateway-service #微服务名称
   config:
-    import: nacos:user-service-dev.yml
+    import: nacos:gateway-service-dev.yml
   cloud:
     nacos:
       discovery:

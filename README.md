@@ -726,3 +726,89 @@ CREATE DATABASE `campus_item_sharing_platform` CHARACTER SET 'utf8mb4' COLLATE '
 ```
 
 使用 `utf8mb4` 字符集和 `utf8mb4_unicode_ci` 排序规则创建数据库。
+
+---
+
+### **一、项目根目录结构（外层）**
+1. **主模块管理**
+   ```bash
+   ├── parent-pom.xml        # Maven聚合父工程，管理公共依赖和插件版本
+   ├── docs/                 # 全局文档：需求文档、架构图、API文档等
+   ├── scripts/              # 部署脚本（Docker/K8s）、CI/CD流水线配置
+   ├── config-repo/          # 集中式配置中心仓库（存放所有服务配置）
+   ├── infrastructure/       # 基础设施组件（网关/Nacos/Sentinel等独立模块）
+   └── services/             # 核心业务服务模块（每个服务独立子目录）
+   ```
+
+---
+
+### **二、单个微服务内部结构（以`service-order`为例）**
+```bash
+service-order/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           ├── config/            # 服务专用配置类（如Feign拦截器）
+│   │   │           ├── controller/        # REST API接口层（DTO入参校验）
+│   │   │           ├── service/           # 业务逻辑层（接口+实现）
+│   │   │           │   └── impl/          # 业务实现类（事务控制、异常处理）
+│   │   │           ├── repository/        # 数据访问层（JPA/MyBatis接口）
+│   │   │           ├── model/             # 数据库实体类（JPA/Hibernate）
+│   │   │           ├── feign/             # OpenFeign客户端接口定义
+│   │   │           ├── exception/         # 自定义异常和全局异常处理器
+│   │   │           └── Application.java   # 服务启动类（SpringBoot入口）
+│   │   └── resources/
+│   │       ├── application.yml           # 基础配置（端口/数据库）
+│   │       ├── bootstrap.yml            # 配置中心连接信息
+│   │       ├── mapper/                   # MyBatis XML映射文件
+│   │       └── static/                   # 静态资源（可选）
+│   └── test/                             # 单元测试/集成测试代码
+├── Dockerfile                            # 容器化构建文件
+└── pom.xml                               # 服务独立依赖管理
+```
+
+---
+
+### **三、关键扩展层（可选）**
+1. **跨服务共享模块**
+   ```bash
+   ├── common/               # 公共库（工具类/枚举/通用DTO）
+   │   ├── common-core/      # 基础工具包（日期处理/加密）
+   │   ├── common-redis/     # Redis模板封装
+   │   └── common-feign/     # Feign拦截器/降级策略
+   ├── api/                  # API契约（Protobuf/Swagger）
+   │   ├── order-api/        # 订单服务接口定义（供其他服务调用）
+   │   └── payment-api/      # 支付服务接口定义
+   ```
+
+2. **监控与运维层**
+   ```bash
+   ├── admin/                # Spring Boot Admin监控模块
+   ├── skywalking/           # 分布式链路追踪配置
+   └── prometheus/           # 指标采集规则文件
+   ```
+
+---
+
+### **四、典型架构原则**
+1. **分层解耦**  
+   • 控制层仅处理HTTP协议转换，业务逻辑下沉至Service层
+   • 数据访问层通过接口隔离实现（如JPA切换为MyBatis无需修改业务代码）
+
+2. **依赖管理**  
+   • 父POM统一管理Spring Cloud/Alibaba版本
+   • 服务间通过Feign声明式调用，禁止直接数据库跨服务访问
+
+3. **配置分离**  
+   • 敏感配置（数据库密码）通过Nacos动态注入
+   • 环境差异配置（dev/test/prod）通过Profile切换
+
+---
+
+### **五、参考案例**
+• **Zheng项目结构**：包含独立的`upms`（用户权限）、`cms`（内容管理）等模块，每个服务内部分为`rpc-api`（接口定义）、`rpc-service`（实现）、`admin`（管理后台）。
+• **RuoYi-Cloud**：采用`gateway`作为统一入口，服务通过`nacos`注册发现，数据库按服务拆分（如`sys_user`表仅存在于`upms`服务）。
+
+如果需要具体实现示例或某个技术组件的集成细节，可进一步提供对应模块的代码片段或配置模板。
