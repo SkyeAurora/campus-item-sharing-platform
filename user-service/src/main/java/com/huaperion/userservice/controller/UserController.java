@@ -7,6 +7,7 @@ import com.huaperion.userservice.model.UserRegisterDTO;
 import com.huaperion.userservice.service.impl.UserServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.huaperion.common.entity.User2Item;
 import org.huaperion.common.result.Result;
 import org.huaperion.common.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,6 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
-
-    @GetMapping(value = "/test")
-    public String test() {
-        return "this is user-service";
-    }
 
     /**
      * 用户登录
@@ -70,6 +66,16 @@ public class UserController {
         return userService.getUserInfo(studentId);
     }
 
+    /**
+     * user-service to item-service
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/info2Item/{id}")
+    public User2Item getUser2Item(@PathVariable("id") Long id) {
+        log.info("根据id查询用户信息");
+        return userService.getUser2Item(id);
+    }
 
     /**
      * 用户修改密码

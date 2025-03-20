@@ -78,8 +78,10 @@
             <!-- Mybatis 启动器依赖 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <artifactId>mybatis-plus-bom</artifactId>
                 <version>3.5.10.1</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
             <!--logback-->

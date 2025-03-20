@@ -9,6 +9,7 @@ import com.huaperion.userservice.model.UserRegisterDTO;
 import com.huaperion.userservice.service.IUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.huaperion.common.entity.User2Item;
 import org.huaperion.common.exception.BusinessException;
 import org.huaperion.common.exception.ErrorCode;
 import org.huaperion.common.result.Result;
@@ -102,10 +103,18 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Result<User> getUserInfo(String studentId) {
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getStudentId, studentId));
-        if(user == null){
+        if (user == null) {
             throw new BusinessException(ErrorCode.USER_NOT_FOUND);
         }
         return Result.success(user, "查询用户信息成功");
+    }
+
+    @Override
+    public User2Item getUser2Item(Long id) {
+        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getId, id));
+        User2Item user2Item = new User2Item();
+        BeanUtils.copyProperties(user, user2Item);
+        return user2Item;
     }
 
     /**

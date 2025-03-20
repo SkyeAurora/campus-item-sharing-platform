@@ -4,6 +4,7 @@ import com.huaperion.userservice.model.User;
 import com.huaperion.userservice.model.UserLoginDTO;
 import com.huaperion.userservice.model.UserLoginVO;
 import com.huaperion.userservice.model.UserRegisterDTO;
+import org.huaperion.common.entity.User2Item;
 import org.huaperion.common.result.Result;
 
 /**
@@ -18,4 +19,6 @@ public interface IUserService {
     Result register(UserRegisterDTO userRegisterDTO);
 
     Result<User> getUserInfo(String studentId);
+
+    User2Item getUser2Item(Long id);
 }

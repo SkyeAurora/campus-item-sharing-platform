@@ -39,7 +39,7 @@ public class JwtUtil {
      */
     @Getter
     // @Value("${jwt.expiration}")
-    private Long expiration = 2L;
+    private Long expiration = 30L;
 
     /**
      * 生成Token令牌
