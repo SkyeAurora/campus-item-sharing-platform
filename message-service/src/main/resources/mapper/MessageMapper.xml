@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huaperion.messageservice.mapper.MessageMapper">
+    <select id="listChatUsers" resultType="com.huaperion.messageservice.model.ChatUserVO">
+        SELECT
+        u.id AS id,
+        u.username AS username,
+        u.student_id AS studentId,
+        u.avatar AS avatar,
+        m.content AS lastMessage,
+        m.create_time AS lastMessageTime,
+        (SELECT COUNT(*) FROM messages
+        WHERE receiver_id = #{currentUserId}
+        AND sender_id = u.id
+        AND is_read = 0) AS unreadCount
+        FROM users u
+        LEFT JOIN messages m
+        ON (m.id = (
+        SELECT id FROM messages
+        WHERE (sender_id = u.id AND receiver_id = #{currentUserId})
+        OR (sender_id = #{currentUserId} AND receiver_id = u.id)
+        ORDER BY create_time DESC
+        LIMIT 1
+        ))
+        WHERE u.id IN (
+        SELECT DISTINCT CASE
+        WHEN sender_id = #{currentUserId} THEN receiver_id
+        ELSE sender_id
+        END
+        FROM messages
+        WHERE sender_id = #{currentUserId}
+        OR receiver_id = #{currentUserId}
+        )
+        ORDER BY m.create_time DESC;
+    </select>
+</mapper>

@@ -4,11 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.huaperion.common.constant.ProductStatusEnum;
 import org.huaperion.common.result.Result;
 import org.huaperion.itemservice.feign.UserServiceClient;
 import org.huaperion.itemservice.mapper.ProductTagsMapper;
 import org.huaperion.itemservice.mapper.ProductsMapper;
-import org.huaperion.itemservice.model.*;
+import org.huaperion.itemservice.model.dto.ProductDTO;
+import org.huaperion.itemservice.model.entity.Product;
+import org.huaperion.itemservice.model.entity.ProductTags;
+import org.huaperion.itemservice.model.vo.MyProductsVO;
+import org.huaperion.itemservice.model.vo.ProductInfoVO;
+import org.huaperion.itemservice.model.vo.ProductVO;
+import org.huaperion.itemservice.model.vo.ProductsPageVO;
 import org.huaperion.itemservice.service.IProductsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -150,8 +156,10 @@ public class ProductsServiceImpl implements IProductsService {
 
     @Override
     public Result deleteProduct(Long id) {
-        productsMapper.deleteById(id);
-        productTagsMapper.delete(new LambdaQueryWrapper<ProductTags>().eq(ProductTags::getProductId, id));
+        LambdaUpdateWrapper<Product> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.eq(Product::getId, id).set(Product::getStatus, ProductStatusEnum.DELETED.getCode());
+        productsMapper.update(null, updateWrapper);
+        // productTagsMapper.delete(new LambdaQueryWrapper<ProductTags>().eq(ProductTags::getProductId, id));
         return Result.success("删除物品成功");
     }
 
@@ -163,7 +171,7 @@ public class ProductsServiceImpl implements IProductsService {
                 .set(Product::getStatus, status) // 直接通过 SQL 原子递增
                 .eq(Product::getId, id); // 根据 ID 定位记录
         // 商品下架修改浏览次数为 0
-        if (status == 4) {
+        if (status == ProductStatusEnum.REMOVED.getCode()) {
             updateWrapper.set(Product::getViewCount, 0);
         }
         // 执行更新操作（参数为 null 表示不更新实体对象，仅通过 Wrapper 操作）

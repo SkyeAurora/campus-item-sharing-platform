@@ -3,8 +3,6 @@ package com.huaperion.userservice.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.huaperion.userservice.model.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * @Author: Huaperion

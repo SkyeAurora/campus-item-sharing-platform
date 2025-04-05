@@ -1,12 +1,10 @@
 package org.huaperion.itemservice.service;
 
 import org.huaperion.common.result.Result;
-import org.huaperion.itemservice.model.MyProductsVO;
-import org.huaperion.itemservice.model.ProductDTO;
-import org.huaperion.itemservice.model.ProductInfoVO;
-import org.huaperion.itemservice.model.ProductsPageVO;
-
-import java.util.List;
+import org.huaperion.itemservice.model.vo.MyProductsVO;
+import org.huaperion.itemservice.model.dto.ProductDTO;
+import org.huaperion.itemservice.model.vo.ProductInfoVO;
+import org.huaperion.itemservice.model.vo.ProductsPageVO;
 
 /**
  * @Author: Huaperion

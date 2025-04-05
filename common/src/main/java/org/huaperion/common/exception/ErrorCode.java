@@ -18,7 +18,11 @@ public enum ErrorCode {
     USER_NOT_FOUND(1004, "用户不存在"),
     USER_NOT_LOGIN(1005, "用户未登录或登录过期"),
     AUTH_TOKEN_EMPTY(1006, "请求头未包含Auth-Token"),
-    FILE_UPLOAD_FAIL(1007,"文件上传失败");
+    FILE_UPLOAD_FAIL(1007, "文件上传失败"),
+    ACCOUNT_BANNED(1008, "账号被禁用"),
+    ALIPAY_REFUND_FAIL(1009, "支付宝退款失败"),
+    ALIAPY_TRANSFER_FAIL(1010, "支付宝转账失败");
+
 
     private final int code;
     private final String message;

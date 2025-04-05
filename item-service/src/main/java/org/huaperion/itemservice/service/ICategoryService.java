@@ -1,7 +1,7 @@
 package org.huaperion.itemservice.service;
 
 import org.huaperion.common.result.Result;
-import org.huaperion.itemservice.model.CategoriesVO;
+import org.huaperion.itemservice.model.vo.CategoriesVO;
 
 /**
  * @Author: Huaperion

@@ -2,7 +2,7 @@ package org.huaperion.itemservice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.huaperion.itemservice.model.Product;
+import org.huaperion.itemservice.model.entity.Product;
 
 /**
  * @Author: Huaperion

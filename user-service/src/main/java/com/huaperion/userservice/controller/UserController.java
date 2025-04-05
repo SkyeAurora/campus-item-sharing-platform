@@ -1,9 +1,6 @@
 package com.huaperion.userservice.controller;
 
-import com.huaperion.userservice.model.User;
-import com.huaperion.userservice.model.UserLoginDTO;
-import com.huaperion.userservice.model.UserLoginVO;
-import com.huaperion.userservice.model.UserRegisterDTO;
+import com.huaperion.userservice.model.*;
 import com.huaperion.userservice.service.impl.UserServiceImpl;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +61,15 @@ public class UserController {
     public Result<User> getUserInfo(@RequestParam String studentId) {
         log.info("查询当前用户信息:{}", studentId);
         return userService.getUserInfo(studentId);
+    }
+
+    /**
+     * 查询学生信息
+     */
+    @GetMapping("/getInfoById")
+    public Result<UserInfoVO> getUserInfoById(@RequestParam Long id) {
+        log.info("查询用户信息:{}", id);
+        return userService.getUserInfoById(id);
     }
 
     /**

@@ -49,7 +49,7 @@ public class GlobalFilterConfig implements GlobalFilter, Ordered {
         String token = request.getHeaders().getFirst(HEADER_NAME);
 
         // 判断是否为白名单请求，以及内置的不需要验证的请求 如 Login 请求
-        if (url.startsWith("/user/login") || url.startsWith("/user/register")) {
+        if (url.startsWith("/user/login") || url.startsWith("/user/register") || url.startsWith("/admin/login") || url.startsWith("/alipay/pay")) {
             return chain.filter(exchange);
         }
 

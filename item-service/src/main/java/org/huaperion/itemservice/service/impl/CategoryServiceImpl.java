@@ -1,9 +1,8 @@
 package org.huaperion.itemservice.service.impl;
 
-import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import org.huaperion.common.result.Result;
 import org.huaperion.itemservice.mapper.CategoryMapper;
-import org.huaperion.itemservice.model.CategoriesVO;
+import org.huaperion.itemservice.model.vo.CategoriesVO;
 import org.huaperion.itemservice.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

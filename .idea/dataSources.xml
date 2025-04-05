@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="nacos_config@117.72.14.138" uuid="de9216ca-34af-45cc-98cd-02b032a24d6f">
+    <data-source source="LOCAL" name="campus_item_sharing_platform@117.72.14.138" uuid="fc0b7230-3b14-4575-9714-3f9b13fbc906">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/user-service/src/main/resources/application.yml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://117.72.14.138:3306/nacos_config?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf8</jdbc-url>
+      <jdbc-url>jdbc:mysql://117.72.14.138:3306/campus_item_sharing_platform</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />

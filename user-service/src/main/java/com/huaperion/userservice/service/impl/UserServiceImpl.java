@@ -2,10 +2,7 @@ package com.huaperion.userservice.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.huaperion.userservice.mapper.UserMapper;
-import com.huaperion.userservice.model.User;
-import com.huaperion.userservice.model.UserLoginDTO;
-import com.huaperion.userservice.model.UserLoginVO;
-import com.huaperion.userservice.model.UserRegisterDTO;
+import com.huaperion.userservice.model.*;
 import com.huaperion.userservice.service.IUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +54,9 @@ public class UserServiceImpl implements IUserService {
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getStudentId, userLoginDTO.getStudentId()));
         if (user == null) {
             throw new BusinessException(ErrorCode.ACCOUNT_NOT_FOUND);
+        }
+        if (!user.getStatus()) {
+            throw new BusinessException(ErrorCode.ACCOUNT_BANNED);
         }
         // 重复加密过程
         String password = encryptWithNameSalt(userLoginDTO.getPassword(), userLoginDTO.getStudentId());
@@ -115,6 +115,17 @@ public class UserServiceImpl implements IUserService {
         User2Item user2Item = new User2Item();
         BeanUtils.copyProperties(user, user2Item);
         return user2Item;
+    }
+
+    @Override
+    public Result<UserInfoVO> getUserInfoById(Long id) {
+        User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getId, id));
+        if (user == null) {
+            throw new BusinessException(ErrorCode.USER_NOT_FOUND);
+        }
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(user, userInfoVO);
+        return Result.success(userInfoVO, "查询用户信息成功");
     }
 
     /**

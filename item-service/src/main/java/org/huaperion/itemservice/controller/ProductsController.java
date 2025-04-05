@@ -2,7 +2,10 @@ package org.huaperion.itemservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.huaperion.common.result.Result;
-import org.huaperion.itemservice.model.*;
+import org.huaperion.itemservice.model.dto.ProductDTO;
+import org.huaperion.itemservice.model.vo.MyProductsVO;
+import org.huaperion.itemservice.model.vo.ProductInfoVO;
+import org.huaperion.itemservice.model.vo.ProductsPageVO;
 import org.huaperion.itemservice.service.impl.ProductsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -84,7 +87,7 @@ public class ProductsController {
     }
 
     /**
-     * 更新用户数据
+     * 更新商品数据
      *
      * @param id
      * @param productDTO
@@ -105,6 +108,12 @@ public class ProductsController {
     @PatchMapping("/{id}")
     public Result updateProductStatus(@PathVariable Long id, @RequestParam Integer status) {
         log.info("修改物品:{}状态:{}", id, status);
-        return productsService.updateProductStatus(id,status);
+        return productsService.updateProductStatus(id, status);
+    }
+
+    @PutMapping("/status/{id}")
+    public Result changeProductStatus(@PathVariable Long id, @RequestParam Integer status) {
+        log.info("修改物品状态");
+        return productsService.updateProductStatus(id, status);
     }
 }

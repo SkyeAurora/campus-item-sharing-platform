@@ -1,9 +1,6 @@
 package com.huaperion.userservice.service;
 
-import com.huaperion.userservice.model.User;
-import com.huaperion.userservice.model.UserLoginDTO;
-import com.huaperion.userservice.model.UserLoginVO;
-import com.huaperion.userservice.model.UserRegisterDTO;
+import com.huaperion.userservice.model.*;
 import org.huaperion.common.entity.User2Item;
 import org.huaperion.common.result.Result;
 
@@ -21,4 +18,6 @@ public interface IUserService {
     Result<User> getUserInfo(String studentId);
 
     User2Item getUser2Item(Long id);
+
+    Result<UserInfoVO> getUserInfoById(Long id);
 }
